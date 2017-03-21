@@ -1,0 +1,24 @@
+version: '2'
+services:
+  lychee:
+    build: .
+    image: dmelo/lychee:latest
+    ports:
+      - "8080:80"
+    links:
+      - lychee-mariadb:mariadb
+    volumes:
+      - ./data:/opt/Lychee/data
+      - ./uploads:/opt/Lychee/uploads
+  lychee-mariadb:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=lychee
+      - MYSQL_USER=lychee
+      - MYSQL_PASSWORD=lychee
+      - MYSQL_DATABASE=lychee
+      - PUID=$UID
+      - PGID=$GROUPS
+    volumes:
+      - ./db-data:/var/lib/mysql
+
